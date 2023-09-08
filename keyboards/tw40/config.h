@@ -17,37 +17,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "config_common.h"
-
-/* USB Device descriptor parameter */
-#define VENDOR_ID    0x503D /* "P3D" */
-#define PRODUCT_ID   0x5457 /* "TW" */
-#define DEVICE_VER   0x0001
-#define MANUFACTURER KnoblesseOblige
-#define PRODUCT      TW40
-
-#define MATRIX_ROWS 4
-#define MATRIX_COLS 14
-
-#define MATRIX_ROW_PINS { B0, D5, D3, D2 }
-#define MATRIX_COL_PINS { F0, F1, F4, F5, F6, F7, C7, C6, B6, B5, B4, D7, D6, D4 }
-#define UNUSED_PINS
-
-#define DIODE_DIRECTION COL2ROW
-
-#define RGB_DI_PIN E6
-#define RGBLED_NUM 15
-#define RGBLIGHT_ANIMATIONS
-
-#define DEBOUNCE 5
-
 #define LOCKING_SUPPORT_ENABLE
-
 #define LOCKING_RESYNC_ENABLE
-
-#define NO_ACTION_MACRO
-#define NO_ACTION_FUNCTION
-
-#define VIAL_KEYBOARD_UID {0xB3, 0x12, 0x72, 0xC5, 0x93, 0x2E, 0x5F, 0x82}
-#define VIAL_UNLOCK_COMBO_ROWS { 0, 1 }
-#define VIAL_UNLOCK_COMBO_COLS { 0, 12 }

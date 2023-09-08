@@ -1,7 +1,15 @@
 VIA_ENABLE = yes
+LTO_ENABLE = yes
 VIAL_ENABLE = yes
-VIAL_ENCODERS_ENABLE = yes
-MOUSEKEY_ENABLE = no
-QMK_SETTINGS = no
+ENCODER_MAP_ENABLE = yes
+MOUSEKEY_ENABLE = yes
+COMBOS_ENABLE = yes
 
-EXTRAFLAGS += -flto
+ifeq ($(strip $(MCU)), atmega32u4)
+    QMK_SETTINGS = no
+    TAP_DANCE_ENABLE = no
+    KEY_OVERRIDE_ENABLE = no
+    GRAVE_ESC_ENABLE = no
+    SPACE_CADET_ENABLE = no
+    MAGIC_ENABLE = no
+endif
