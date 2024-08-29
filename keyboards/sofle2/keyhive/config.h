@@ -31,7 +31,7 @@
 // Add RGB underglow
 // by defining in the keyboard, incompatible keymaps will fail to compile.
 #ifdef RGBLIGHT_ENABLE
-#    define RGBLED_NUM 74
+#    define RGBLIGHT_LED_COUNT 74
 #    define RGBLED_SPLIT {37,37}
 #    define RGBLIGHT_HUE_STEP  10
 #    define RGBLIGHT_SAT_STEP  17

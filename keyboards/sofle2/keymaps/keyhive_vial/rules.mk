@@ -18,4 +18,10 @@ RGBLIGHT_ENABLE = yes       # Enable keyboard RGB underglow
 AUDIO_ENABLE = no           # Audio output
 ENCODER_ENABLE = yes
 
+AUTO_SHIFT_ENABLE = yes
+CAPS_WORD_ENABLE = yes
+KEY_LOCK_ENABLE = yes
+
+DEFERRED_EXEC_ENABLE = yes
+
 # RGB_MATRIX_ENABLE = WS28127

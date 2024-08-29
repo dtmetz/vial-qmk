@@ -3,6 +3,7 @@
 #pragma once
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 10
+#define MAX_DEFERRED_EXECUTORS 10
 
 // More lighting options in quantum/rgblight/rgblight.h
 #ifdef RGBLIGHT_ENABLE
@@ -26,7 +27,7 @@
 
     // Allow compiling to work on sofle/rev1
     #if defined(KEYBOARD_sofle_rev1)
-	    #define RGBLED_NUM 70
+	    #define RGBLIGHT_LED_COUNT 70
 	    // D3 for ws2812 RGB LED
 	    #define WS2812_DI_PIN D3
     #endif
