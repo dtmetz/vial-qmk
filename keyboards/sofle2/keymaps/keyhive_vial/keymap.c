@@ -1,5 +1,6 @@
 #include QMK_KEYBOARD_H
 
+
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _QWERTY,
@@ -10,14 +11,39 @@ enum sofle_layers {
 };
 
 enum custom_keycodes {
-    KC_QWERTY = SAFE_RANGE,
+    KC_QWERTY = QK_KB_0,
     KC_COLEMAK,
     KC_PRVWD,
     KC_NXTWD,
     KC_LSTRT,
     KC_LEND,
-    KC_DLINE
+    KC_DLINE,
+    SMTD_KEYCODES_BEGIN,
+    CKC_A, // reads as C(ustom) + KC_A, but you may give any name here
+    CKC_S,
+    CKC_D,
+    CKC_F,
+    CKC_J, // reads as C(ustom) + KC_A, but you may give any name here
+    CKC_K,
+    CKC_L,
+    CKC_COLON,    
+    SMTD_KEYCODES_END,    
 };
+
+#include "sm_td.h"
+
+void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
+    switch (keycode) {
+        SMTD_MT(CKC_A, KC_A, KC_LEFT_GUI)
+        SMTD_MT(CKC_S, KC_S, KC_LEFT_ALT)
+        SMTD_MT(CKC_D, KC_D, KC_LEFT_CTRL)
+        SMTD_MT(CKC_F, KC_F, KC_LSFT)
+        SMTD_MT(CKC_J, KC_J, KC_LSFT)
+        SMTD_MT(CKC_K, KC_K, KC_LEFT_CTRL)
+        SMTD_MT(CKC_L, KC_L, KC_LEFT_ALT)
+        SMTD_MT(CKC_COLON, KC_COLON, KC_LEFT_GUI)
+    }
+}
 
 #if defined(RGBLIGHT_ENABLE) && defined(RGBLIGHT_LAYERS)
 	extern rgblight_config_t rgblight_config; // To pull layer status for RGBLIGHT
@@ -213,6 +239,10 @@ bool oled_task_user(void) {
 // }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_smtd(keycode, record)) {
+        return false;
+    }
+
     switch (keycode) {
         case KC_QWERTY:
             if (record->event.pressed) {
@@ -444,5 +474,3 @@ void keyboard_post_init_user(void)
 		run_trackball_cleanup();
 	#endif
 }
-
-
