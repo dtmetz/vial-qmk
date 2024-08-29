@@ -3,6 +3,76 @@
   "vendorId": "0xFC32",
   "productId": "0x1287",
   "lighting": "qmk_rgblight",
+  "customKeycodes": [
+	{"name": "KC_QWERTY",
+	 "title": "QWERTY",
+	 "shortName": "KC_QWERTY"
+	},
+	{"name": "Colmack",
+	 "title": "Colmack",
+	 "shortName": "KC_COLEMAK"
+	},
+	{"name": "KC_PRVWD",
+	 "title": "KC_PRVWD",
+	 "shortName": "KC_PRVWD"
+	},
+	{"name": "KC_PRVWD",
+	 "title": "KC_PRVWD",
+	 "shortName": "KC_PRVWD"
+	},
+	{"name": "KC_NXTWD",
+	 "title": "KC_NXTWD",
+	 "shortName": "KC_NXTWD"
+	},
+	{"name": "KC_LSTRT",
+	 "title": "KC_LSTRT",
+	 "shortName": "KC_LSTRT"
+	},  
+	{"name": "KC_LEND",
+	 "title": "KC_LEND",
+	 "shortName": "KC_LEND"
+	},
+	{"name": "KC_DLINE",
+	 "title": "KC_DLINE",
+	 "shortName": "KC_DLINE"
+	},
+	{"name": "CKC_A",
+	 "title": "CKC_A",
+	 "shortName": "CKC_A"
+	},  
+	{"name": "CKC_S",
+	 "title": "CKC_S",
+	 "shortName": "CKC_S"
+	},
+	{"name": "CKC_D",
+	 "title": "CKC_D",
+	 "shortName": "CKC_D"
+	},
+	{"name": "CKC_F",
+	 "title": "CKC_F",
+	 "shortName": "CKC_F"
+	},
+	{"name": "CKC_J",
+	 "title": "CKC_J",
+	 "shortName": "CKC_J"
+	},
+	{"name": "CKC_K",
+	 "title": "CKC_K",
+	 "shortName": "CKC_K"
+	},
+	{"name": "CKC_L",
+	 "title": "CKC_L",
+	 "shortName": "CKC_L"
+	}, 
+	{"name": "CKC_COLON",
+	 "title": "CKC_COLON",
+	 "shortName": "CKC_COLON"
+	},   
+  {"name": "SMTD_KEYCODES_END",
+   "title": "SMTD_KEYCODES_END",
+   "shortName": "SMTD_KEYCODES_END"
+  }
+],
   "matrix": {"rows": 10, "cols": 7},
   "layouts": {
     "keymap": [
