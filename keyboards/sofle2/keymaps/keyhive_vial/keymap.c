@@ -474,3 +474,29 @@ void keyboard_post_init_user(void)
 		run_trackball_cleanup();
 	#endif
 }
+
+#ifdef OS_DETECTION_ENABLE
+bool process_detected_host_os_kb(os_variant_t detected_os) {
+  if (!process_detected_host_os_user(detected_os)) {
+    return false;
+  }
+  switch (detected_os) {
+  case OS_MACOS:
+    keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
+    break;
+  case OS_IOS:
+    keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
+    break;
+  case OS_WINDOWS:
+    keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+    break;
+  case OS_LINUX:
+    keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+    break;
+  case OS_UNSURE:
+    keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+    break;
+  }
+  return true;
+}
+#endif
