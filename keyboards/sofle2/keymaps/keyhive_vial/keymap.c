@@ -1,6 +1,80 @@
 #include QMK_KEYBOARD_H
 
 
+#ifdef RGB_MATRIX_ENABLE
+  // Physical Layout
+  // Columns
+  // 0  1  2  3  4  5  6  7  8  9  10 11 12 13
+  //                                           ROWS
+  // 12 13 22 23 32 33       33 32 23 22 13 12  0
+  //    03    02    01       01    02    03
+  // 11 14 21 24 31 34       34 31 24 21 14 11  1
+  //                         
+  // 10 15 20 25 30 35       35 30 25 20 15 10  2
+  //    04    05    06       06    05    04
+  // 09 16 19 26 29 36       36 29 26 19 16 09  3
+  //
+  //     08 17 18 27 28      28 27 18 17 08      4
+  //   07            08      08             07
+
+led_config_t g_led_config = {
+    {
+        // Left
+        {  33,  32,  24,  23,  14,  13 },
+        {  34,  31,  25,  22,  15,  12 },
+        {  35,   30,  26,  21,  16,  11 },
+        {  36,   29,  27,  20,  17,  10},
+        {  NO_LED, 28,  19, 18,  9, 8 },
+        
+        // Right
+        {  70,  69,  61,  60,  51,  50},
+        {  71,  68,  62,  59,  52,  49},
+        {  72,  67,  63,  58,  53,  48},
+        {  73,  66,  64,  57,  54,  47},
+        {  65,  56,  55,  46,  45, NO_LED}
+    },
+    {
+        // Physical Positions
+        // Underglow Left
+        {63,12},{32,12},{0,16},{0,42},{31,39},{63,39},{20,58},{100,58},
+                        
+        // Left
+        {94,64},{82,59},{78,44},{78,30},{78,17},{78,3},
+        {63,2},{63,16},{63,29},{63,43},{63,56},{47,54},
+        {47,40},{47,27},{47,14},{47,0},{32,2},{32,16},
+        {32,29},{32,42},{32,56},{16,45},{16,32},{16,19},
+        {16,5},{0,6},{0,19},{0,33},{0,46},
+                        
+        // Underglow Right
+        {161,12},{192,12},{224,16},{224,42},{192,39},{161,39},{204,58},{124,58},
+                        
+        // Right
+        {124,64},{139,59},{146,44},{146,30},{146,17},{146,3},				
+        {161,2},{161,16},{161,29},{161,43},{161,56},{177,54},{177,40},				
+        {177,27},{177,13},{177,0},{192,2},{192,16},{192,29},				
+        {192,43},{192,56},{208,45},{208,32},{208,19},{208,5},				
+        {224,6},{224,19},{224,33},{224,46}				
+    },
+    {
+        // LED Index to Flag
+        LED_FLAG_UNDERGLOW, LED_FLAG_UNDERGLOW, LED_FLAG_UNDERGLOW, LED_FLAG_UNDERGLOW, LED_FLAG_UNDERGLOW, LED_FLAG_UNDERGLOW, LED_FLAG_UNDERGLOW, LED_FLAG_UNDERGLOW,
+        LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+        LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+        LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+        LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+        LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+        LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+        LED_FLAG_UNDERGLOW, LED_FLAG_UNDERGLOW, LED_FLAG_UNDERGLOW, LED_FLAG_UNDERGLOW, LED_FLAG_UNDERGLOW, LED_FLAG_UNDERGLOW, LED_FLAG_UNDERGLOW, LED_FLAG_UNDERGLOW,
+        LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+        LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+        LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+        LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+        LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+        LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT
+    }
+};
+#endif
+
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _QWERTY,
@@ -396,7 +470,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 
 
-#ifdef RGBLIGHT_ENABLE
+#if defined(RGBLIGHT_ENABLE) || defined(RGB_MATRIX_ENABLE)
 	layer_state_t layer_state_set_user(layer_state_t state)	//Use for layer lighting. This method uses less space than RGBLIGHT_LAYER_SEGMENTS.
 	{
 		switch (get_highest_layer(state)) { // Change all other LEDs based on layer state as well
@@ -446,7 +520,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 		  }
 		return state;
 	}
+#endif
 
+#if defined(RGBLIGHT_ENABLE) 
 	bool led_update_user(led_t led_state)	//Lock key status indicators
 	{
 		if(led_state.caps_lock){
@@ -462,9 +538,13 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 	}
 #endif
 
-
 void keyboard_post_init_user(void)
 {
+    #ifdef RGB_MATRIX_ENABLE
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_REACTIVE); // Set reactive
+        rgb_matrix_set_speed(25);
+    #endif
+
 	#ifdef RGBLIGHT_ENABLE
 		rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_GRADIENT+8); //Set to static gradient 9
 	#endif
@@ -481,21 +561,21 @@ bool process_detected_host_os_kb(os_variant_t detected_os) {
     return false;
   }
   switch (detected_os) {
-  case OS_MACOS:
-    keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
-    break;
-  case OS_IOS:
-    keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
-    break;
-  case OS_WINDOWS:
-    keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
-    break;
-  case OS_LINUX:
-    keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
-    break;
-  case OS_UNSURE:
-    keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
-    break;
+    case OS_MACOS:
+        keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
+        break;
+    case OS_IOS:
+        keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = true;
+        break;
+    case OS_WINDOWS:
+        keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+        break;
+    case OS_LINUX:
+        keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+        break;
+    case OS_UNSURE:
+        keymap_config.swap_lctl_lgui = keymap_config.swap_rctl_rgui = false;
+        break;
   }
   return true;
 }
