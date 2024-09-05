@@ -2,7 +2,7 @@
   "name": "Sofle v2 RGB",
   "vendorId": "0xFC32",
   "productId": "0x1287",
-  "lighting": "qmk_rgblight",
+  "lighting": "vialrgb",
   "customKeycodes": [
 	{"name": "KC_QWERTY",
 	 "title": "QWERTY",
