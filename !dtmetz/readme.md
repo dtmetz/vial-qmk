@@ -1,5 +1,5 @@
 To build
-qmk compile -kb sofle2/keyhive -km keyhive_vial -e CONVERT_TO=kb2040
+qmk compile -kb sofle2/keyhive -km keyhive_vial
 
 To update
 git fetch upstream

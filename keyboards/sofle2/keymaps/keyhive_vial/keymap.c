@@ -9,7 +9,7 @@
   // 12 13 22 23 32 33       33 32 23 22 13 12  0
   //    03    02    01       01    02    03
   // 11 14 21 24 31 34       34 31 24 21 14 11  1
-  //                         
+  //
   // 10 15 20 25 30 35       35 30 25 20 15 10  2
   //    04    05    06       06    05    04
   // 09 16 19 26 29 36       36 29 26 19 16 09  3
@@ -25,7 +25,7 @@ led_config_t g_led_config = {
         {  35,   30,  26,  21,  16,  11 },
         {  36,   29,  27,  20,  17,  10},
         {  NO_LED, 28,  19, 18,  9, 8 },
-        
+
         // Right
         {  70,  69,  61,  60,  51,  50},
         {  71,  68,  62,  59,  52,  49},
@@ -37,23 +37,23 @@ led_config_t g_led_config = {
         // Physical Positions
         // Underglow Left
         {63,12},{32,12},{0,16},{0,42},{31,39},{63,39},{20,58},{100,58},
-                        
+
         // Left
         {94,64},{82,59},{78,44},{78,30},{78,17},{78,3},
         {63,2},{63,16},{63,29},{63,43},{63,56},{47,54},
         {47,40},{47,27},{47,14},{47,0},{32,2},{32,16},
         {32,29},{32,42},{32,56},{16,45},{16,32},{16,19},
         {16,5},{0,6},{0,19},{0,33},{0,46},
-                        
+
         // Underglow Right
         {161,12},{192,12},{224,16},{224,42},{192,39},{161,39},{204,58},{124,58},
-                        
+
         // Right
-        {124,64},{139,59},{146,44},{146,30},{146,17},{146,3},				
-        {161,2},{161,16},{161,29},{161,43},{161,56},{177,54},{177,40},				
-        {177,27},{177,13},{177,0},{192,2},{192,16},{192,29},				
-        {192,43},{192,56},{208,45},{208,32},{208,19},{208,5},				
-        {224,6},{224,19},{224,33},{224,46}				
+        {124,64},{139,59},{146,44},{146,30},{146,17},{146,3},
+        {161,2},{161,16},{161,29},{161,43},{161,56},{177,54},{177,40},
+        {177,27},{177,13},{177,0},{192,2},{192,16},{192,29},
+        {192,43},{192,56},{208,45},{208,32},{208,19},{208,5},
+        {224,6},{224,19},{224,33},{224,46}
     },
     {
         // LED Index to Flag
@@ -72,6 +72,24 @@ led_config_t g_led_config = {
         LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
         LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT
     }
+};
+#endif
+
+#if defined(ENCODER_ENABLE) && defined(ENCODER_MAP_ENABLE)
+// Default encoder_map — one entry per layer. Each inner pair is {clockwise, counter-clockwise}.
+// NUM_ENCODERS = 2 (encoder 0 = left, encoder 1 = right).
+// These provide sensible defaults and allow the Vial configurator to override values in EEPROM.
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
+    // _QWERTY: Encoder 0 (left) = volume, Encoder 1 (right) = page up/down
+    { {KC_VOLU, KC_VOLD}, {KC_PGDN, KC_PGUP} },
+    // _SYMBOLS
+    { {KC_VOLU, KC_VOLD}, {KC_PGDN, KC_PGUP} },
+    // _NAV
+    { {KC_VOLU, KC_VOLD}, {KC_PGDN, KC_PGUP} },
+    // _APP
+    { {KC_VOLU, KC_VOLD}, {KC_PGDN, KC_PGUP} },
+    // _EXTRA
+    { {KC_VOLU, KC_VOLD}, {KC_PGDN, KC_PGUP} },
 };
 #endif
 
@@ -100,8 +118,8 @@ enum custom_keycodes {
     CKC_J, // reads as C(ustom) + KC_A, but you may give any name here
     CKC_K,
     CKC_L,
-    CKC_COLON,    
-    SMTD_KEYCODES_END,    
+    CKC_COLON,
+    SMTD_KEYCODES_END,
 };
 
 #include "sm_td.h"
@@ -448,24 +466,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 #ifdef ENCODER_ENABLE
-
 bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) {
-        if (clockwise) {
-            tap_code(KC_VOLU);
-        } else {
-            tap_code(KC_VOLD);
-        }
-    } else if (index == 1) {
-        if (clockwise) {
-            tap_code(KC_PGDN);
-        } else {
-            tap_code(KC_PGUP);
-        }
-    }
     return true;
 }
-
 #endif
 
 
@@ -522,7 +525,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 	}
 #endif
 
-#if defined(RGBLIGHT_ENABLE) 
+#if defined(RGBLIGHT_ENABLE)
 	bool led_update_user(led_t led_state)	//Lock key status indicators
 	{
 		if(led_state.caps_lock){
